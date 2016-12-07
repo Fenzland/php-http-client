@@ -1,0 +1,13 @@
+{
+    "name": "fenzland/http",
+    "description": "A lightweight HTTP client with PHP7.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Fenz",
+            "email": "uukoo@163.com"
+        }
+    ],
+    "require": {}
+}
