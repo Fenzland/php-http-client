@@ -9,5 +9,13 @@
             "email": "uukoo@163.com"
         }
     ],
-    "require": {}
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "5.5.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Fenzland\\HTTP\\": "src/"
+        }
+    }
 }
