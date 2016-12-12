@@ -1,6 +1,6 @@
 <?php
 
-namespace Fenzland\HTTP;
+namespace FenzHTTP;
 
 ////////////////////////////////////////////////////////////////
 
@@ -32,7 +32,7 @@ class Request
 	 *
 	 * @var    int
 	 */
-	protected $port=-1;
+	protected $port= 80;
 
 	/**
 	 * Var user
@@ -220,6 +220,24 @@ class Request
 	}
 
 	/**
+	 * Method sendFile
+	 *
+	 * @access public
+	 *
+	 * @param  FormData $body
+	 *
+	 * @return Response
+	 */
+	public function sendFormData( FormData$body ):Response
+	{
+		if( in_array( $this->method, [ 'POST', 'PUT', 'PATCH', ] ) ){
+			throw new \Exception('FormData must be send with method POST, PUT or PATCH');
+		}
+
+		return $this->send("$body");
+	}
+
+	/**
 	 * Method sendAndClose
 	 *
 	 * @access public
@@ -233,20 +251,6 @@ class Request
 		$this->justSend($body);
 
 		$this->closeHandle();
-	}
-
-	/**
-	 * Method stream
-	 *
-	 * @access public
-	 *
-	 * @return Stream
-	 */
-	public function stream():Stream
-	{
-		$this->sendHeader();
-
-		return new StreamHandle($this->handle);
 	}
 
 	/**
@@ -287,6 +291,138 @@ class Request
 	}
 
 	/**
+	 * Method get
+	 *
+	 * @access public
+	 *
+	 * @return Response
+	 */
+	public function get():Response
+	{
+		return $this->method('GET')->send();
+	}
+
+	/**
+	 * Method head
+	 *
+	 * @access public
+	 *
+	 * @return Response
+	 */
+	public function head():Response
+	{
+		return $this->method('HEAD')->send();
+	}
+
+	/**
+	 * Method delete
+	 *
+	 * @access public
+	 *
+	 * @return Response
+	 */
+	public function delete():Response
+	{
+		return $this->method('DELETE')->send();
+	}
+
+	/**
+	 * Method post
+	 *
+	 * @access public
+	 *
+	 * @param  string $body
+	 *
+	 * @return Response
+	 */
+	public function post( string$body ):Response
+	{
+		return $this->method('POST')->send($body);
+	}
+
+	/**
+	 * Method postFields
+	 *
+	 * @access public
+	 *
+	 * @param  mixed $fields
+	 *
+	 * @return Response
+	 */
+	public function postFields( $fields ):Response
+	{
+		return $this->header( 'Content-Type:', 'application/x-www-form-urlencoded' )->method('POST')->send(http_build_query($fields));
+	}
+
+	/**
+	 * Method put
+	 *
+	 * @access public
+	 *
+	 * @param  string $body
+	 *
+	 * @return Response
+	 */
+	public function put( string$body ):Response
+	{
+		return $this->method('PUT')->send($body);
+	}
+
+	/**
+	 * Method putFields
+	 *
+	 * @access public
+	 *
+	 * @param  mixed $fields
+	 *
+	 * @return Response
+	 */
+	public function putFields( $fields ):Response
+	{
+		return $this->header( 'Content-Type:', 'application/x-www-form-urlencoded' )->method('PUT')->send(http_build_query($fields));
+	}
+
+	/**
+	 * Method patch
+	 *
+	 * @access public
+	 *
+	 * @param  string $body
+	 *
+	 * @return Response
+	 */
+	public function patch( string$body ):Response
+	{
+		return $this->method('Patch')->send($body);
+	}
+
+	/**
+	 * Method patchFields
+	 *
+	 * @access public
+	 *
+	 * @param  mixed $fields
+	 *
+	 * @return Response
+	 */
+	public function patchFields( $fields ):Response
+	{
+		return $this->header( 'Content-Type:', 'application/x-www-form-urlencoded' )->method('PATCH')->send(http_build_query($fields));
+	}
+
+	/**
+	 * Method options
+	 *
+	 * @access public
+	 *
+	 * @return Response
+	 */
+	public function options():Response
+	{
+		return $this->method('OPTIONS')->send();
+	}
+
+	/**
 	 * Method justSend
 	 *
 	 * @access protected
@@ -301,6 +437,8 @@ class Request
 		{
 			$this->header( 'Content-Length', $length );
 		}
+
+		$this->header( 'Connection', 'close' );
 
 		$this->sendHeader();
 
@@ -353,7 +491,11 @@ class Request
 	 */
 	public function closeHandle()
 	{
-		fclose($this->handle);
+		if( $this->handle ){
+			fclose($this->handle);
+
+			$this->handle= null;
+		}
 	}
 
 	/**

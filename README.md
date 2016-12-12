@@ -13,7 +13,8 @@ HTTP::withScheme('http')->withHost('example.org')->withPort(80)->withQuery('/exa
 
 HTTP::url('http://example.org/example/?key=value')->get();
 HTTP::url('http://example.org/example/?key=value')->head();
-HTTP::url('http://example.org/example/?key=value')->option();
+HTTP::url('http://example.org/example/?key=value')->options();
+HTTP::url('http://example.org/example/?key=value')->delete();
 HTTP::url('http://example.org/example/?key=value')->post(  'id=1&name=Fenz' );
 HTTP::url('http://example.org/example/?key=value')->put(   'id=1&name=Fenz' );
 HTTP::url('http://example.org/example/?key=value')->patch( 'id=1&name=Fenz' );
