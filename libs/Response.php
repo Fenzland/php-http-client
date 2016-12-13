@@ -82,6 +82,102 @@ class Response
 	}
 
 	/**
+	 * Method getStatus
+	 *
+	 * @access public
+	 *
+	 * @return int
+	 */
+	public function getStatus():int
+	{
+		return $this->statusCode;
+	}
+
+	/**
+	 * Method getStatusCode
+	 *
+	 * @access public
+	 *
+	 * @return int
+	 */
+	public function getStatusCode():int
+	{
+		return $this->getStatus();
+	}
+
+	/**
+	 * Method getStatusMessage
+	 *
+	 * @access public
+	 *
+	 * @return string
+	 */
+	public function getStatusMessage():string
+	{
+		return $this->getStatusMessage;
+	}
+
+	/**
+	 * Method header
+	 *
+	 * @access public
+	 *
+	 * @param  string $key
+	 *
+	 * @return mixed
+	 */
+	public function header( string$key=null )
+	{
+		return ( isset($key) ?
+			$this->headers[ucwords( strtolower($key), '-' )]
+			:
+			$this->getHeaders()
+		);
+	}
+
+	/**
+	 * Method getHeaders
+	 *
+	 * @access public
+	 *
+	 * @return array
+	 */
+	public function getHeaders():array
+	{
+		return $this->headers;
+	}
+
+	/**
+	 * Method getBody
+	 *
+	 * @access public
+	 *
+	 * @return string
+	 */
+	public function getBody():string
+	{
+		return $this->body;
+	}
+
+	/**
+	 * Method getJson
+	 *
+	 * @access public
+	 *
+	 * @return array|null
+	 */
+	public function getJson():array
+	{
+		try{
+			return json_decode( $this->body, true );
+		}
+		catch( \Throwable$e )
+		{
+			return null;
+		}
+	}
+
+	/**
 	 * Method parsMessageLine
 	 *
 	 * @access private
