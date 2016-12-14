@@ -2,10 +2,13 @@
 
 namespace FenzHTTP;
 
+use FenzHelper\TGetter;
+
 ////////////////////////////////////////////////////////////////
 
 class Response
 {
+	use TGetter;
 
 	/**
 	 * Var handle
