@@ -14,7 +14,7 @@ class Request
 	 *
 	 * @var    string
 	 */
-	protected $scheme= 'https';
+	protected $scheme= 'http';
 
 	/**
 	 * Var host
@@ -32,7 +32,7 @@ class Request
 	 *
 	 * @var    int
 	 */
-	protected $port= 80;
+	protected $port;
 
 	/**
 	 * Var user
@@ -479,7 +479,11 @@ class Request
 		if( !$this->host )
 			throw new \Exception('Host is not defined.');
 
-		$this->handle= fsockopen( $this->host, $this->port );
+		$this->handle= ($this->scheme==='https'?
+			fsockopen( 'ssl://'.$this->host, $this->port?:443 )
+		:
+			fsockopen( $this->host, $this->port?:80 )
+		);
 	}
 
 	/**
