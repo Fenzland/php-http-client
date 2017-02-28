@@ -2,7 +2,7 @@
 
 namespace FenzHTTP;
 
-use FenzHelper\TGetter;
+use FenzHelpers\TGetter;
 
 ////////////////////////////////////////////////////////////////
 
