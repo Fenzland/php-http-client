@@ -191,7 +191,9 @@ class Response
 	 */
 	private function parsMessageLine( string$messageLine )
 	{
-		list( $this->version, $this->statusCode, $this->statusMessage )= explode( ' ', str_replace( 'HTTP/', '', $messageLine ) );
+		preg_replace_callback( '/^HTTP\\/(\\S+) (\\S+) (.+)$/', function( array$matches ){
+			list( $null, $this->version, $this->statusCode, $this->statusMessage )= $matches;
+		}, $messageLine );
 	}
 
 	/**
