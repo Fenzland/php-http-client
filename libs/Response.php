@@ -167,9 +167,9 @@ class Response
 	 *
 	 * @access public
 	 *
-	 * @return array|null
+	 * @return mixed
 	 */
-	public function getJson():array
+	public function getJson()
 	{
 		try{
 			return json_decode( $this->body, true );
