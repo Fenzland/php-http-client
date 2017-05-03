@@ -3,6 +3,11 @@ Fenzland HTTP
 
 A lightweight HTTP client with PHP7.
 
+# Install
+
+```bash
+composer require fenzland/http
+```
 
 # Usage
 
