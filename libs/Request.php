@@ -230,7 +230,7 @@ class Request
 	 */
 	public function sendFormData( FormData$body ):Response
 	{
-		if( in_array( $this->method, [ 'POST', 'PUT', 'PATCH', ] ) ){
+		if(!( in_array( $this->method, [ 'POST', 'PUT', 'PATCH', ] ) )){
 			throw new \Exception('FormData must be send with method POST, PUT or PATCH');
 		}
 
