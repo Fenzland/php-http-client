@@ -234,6 +234,8 @@ class Request
 			throw new \Exception('FormData must be send with method POST, PUT or PATCH');
 		}
 
+		$body->setRequest( $this );
+
 		return $this->send("$body");
 	}
 

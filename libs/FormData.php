@@ -35,6 +35,15 @@ class FormData
 	protected $files= [];
 
 	/**
+	 * Var request
+	 *
+	 * @access protected
+	 *
+	 * @var    Request
+	 */
+	protected $request;
+
+	/**
 	 * Method __construct
 	 *
 	 * @access public
@@ -116,6 +125,20 @@ class FormData
 	}
 
 	/**
+	 * Method setRequest
+	 *
+	 * @access public
+	 *
+	 * @param  Request $request
+	 *
+	 * @return void
+	 */
+	public function setRequest( Request$request )
+	{
+		$this->request= $request;
+	}
+
+	/**
 	 * Method __toString
 	 *
 	 * @access public
@@ -124,7 +147,7 @@ class FormData
 	 */
 	public function __toString():string
 	{
-		$this->header( 'Content-Type:', "multipart/form-data, boundary={$this->boundary}" );
+		$this->request->header( 'Content-Type:', "multipart/form-data, boundary={$this->boundary}" );
 
 		$body= '';
 
