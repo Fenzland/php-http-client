@@ -216,7 +216,7 @@ class Request
 	{
 		$this->justSend($body);
 
-		return new Response($this->handle);
+		return new Response( $this, $this->handle );
 	}
 
 	/**

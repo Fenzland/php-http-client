@@ -47,6 +47,15 @@ class Response
 	protected $statusMessage= '';
 
 	/**
+	 * Var request
+	 *
+	 * @access protected
+	 *
+	 * @var    Request
+	 */
+	protected $request;
+
+	/**
 	 * Var headers
 	 *
 	 * @access protected
@@ -69,10 +78,12 @@ class Response
 	 *
 	 * @access public
 	 *
+	 * @param  Request $request
 	 * @param  resource $handle
 	 */
-	public function __construct( $handle )
+	public function __construct( Request$request, $handle )
 	{
+		$this->request= $request;
 		$this->handle= $handle;
 
 		$this->parsMessageLine(trim(fgets($this->handle)));
@@ -82,6 +93,18 @@ class Response
 		}
 
 		$this->readBody();
+	}
+
+	/**
+	 * Method getRequest
+	 *
+	 * @access public
+	 *
+	 * @return Request
+	 */
+	public function getRequest():Request
+	{
+		return $this->request;
 	}
 
 	/**
