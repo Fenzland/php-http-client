@@ -244,24 +244,41 @@ class Response
 	 */
 	private function readBody()
 	{
-		$odd= true;
+		$body= '';
 
 		while( !feof($this->handle) )
 		{
-			$line= fgets($this->handle);
-
-			if( substr( $line, -2 )==="\r\n" )
-			{
-				if( !$odd )
-				{
-					$this->body.= substr( $line, 0, -2 );
-				}
-
-				$odd= !$odd;
-			}else{
-				$this->body.= $line;
-			}
+			$body.= fgets($this->handle);
 		}
+
+		if( $this->headers['Transfer-Encoding']==='chunked' )
+		{
+			$this->body= $this->unchunk( $body );
+		}else{
+			$this->body= $body;
+		}
+	}
+
+	/**
+	 * Method unchunk
+	 *
+	 * @access private
+	 *
+	 * @param  string $chunked
+	 *
+	 * @return string
+	 */
+	private function unchunk( string$chunked ):string
+	{
+		return preg_replace_callback(
+			'/(?:(?:\r\n|\n)|^)([0-9A-F]+)(?:\r\n|\n){1,2}(.*?)((?:\r\n|\n)(?:[0-9A-F]+(?:\r\n|\n))|$)/si'
+		,
+			function( array$matches ){
+				return hexdec( $matches[1] )==strlen( $matches[2] )? $matches[2] : $matches[0];
+			}
+		,
+			$chunked
+		);
 	}
 
 }
