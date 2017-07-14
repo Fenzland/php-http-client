@@ -251,7 +251,7 @@ class Response
 			$body.= fgets($this->handle);
 		}
 
-		if( $this->headers['Transfer-Encoding']==='chunked' )
+		if( isset( $this->headers['Transfer-Encoding'] ) && $this->headers['Transfer-Encoding']==='chunked' )
 		{
 			$this->body= $this->unchunk( $body );
 		}else{
