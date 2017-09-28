@@ -378,7 +378,7 @@ class Request
 	 */
 	public function postFields( $fields ):Response
 	{
-		return $this->header( 'Content-Type:', 'application/x-www-form-urlencoded' )->method('POST')->send(http_build_query($fields));
+		return $this->header( 'Content-Type', 'application/x-www-form-urlencoded' )->method('POST')->send(http_build_query($fields));
 	}
 
 	/**
@@ -406,7 +406,7 @@ class Request
 	 */
 	public function putFields( $fields ):Response
 	{
-		return $this->header( 'Content-Type:', 'application/x-www-form-urlencoded' )->method('PUT')->send(http_build_query($fields));
+		return $this->header( 'Content-Type', 'application/x-www-form-urlencoded' )->method('PUT')->send(http_build_query($fields));
 	}
 
 	/**
@@ -434,7 +434,7 @@ class Request
 	 */
 	public function patchFields( $fields ):Response
 	{
-		return $this->header( 'Content-Type:', 'application/x-www-form-urlencoded' )->method('PATCH')->send(http_build_query($fields));
+		return $this->header( 'Content-Type', 'application/x-www-form-urlencoded' )->method('PATCH')->send(http_build_query($fields));
 	}
 
 	/**
