@@ -128,6 +128,22 @@ class Request
 	}
 
 	/**
+	 * Method version
+	 *
+	 * @access public
+	 *
+	 * @param  string $version
+	 *
+	 * @return self
+	 */
+	public function version( string$version ):self
+	{
+		$this->version= $version;
+
+		return $this;
+	}
+
+	/**
 	 * Method url
 	 *
 	 * @access public
@@ -276,7 +292,7 @@ class Request
 			throw new \Exception("Param 1 of $method is required.");
 		}
 
-		if( in_array( $real, [ 'url', 'header', 'headers', 'method', ] ) )
+		if( in_array( $real, [ 'version', 'url', 'header', 'headers', 'method', ] ) )
 		{
 			return $this->$real( ...$params );
 		}
