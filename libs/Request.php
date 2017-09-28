@@ -107,6 +107,15 @@ class Request
 	protected $headers= [];
 
 	/**
+	 * Var body
+	 *
+	 * @access protected
+	 *
+	 * @var    string
+	 */
+	protected $body= '';
+
+	/**
 	 * Var handle
 	 *
 	 * @access private
@@ -451,6 +460,8 @@ class Request
 	 */
 	protected function justSend( string$body=null )
 	{
+		$this->body= $body;
+
 		if( $length= strlen($body) )
 		{
 			$this->header( 'Content-Length', $length );
