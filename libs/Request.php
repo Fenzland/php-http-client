@@ -125,6 +125,15 @@ class Request
 	private $handle;
 
 	/**
+	 * Var raw
+	 *
+	 * @access private
+	 *
+	 * @var    string
+	 */
+	private $raw;
+
+	/**
 	 * Method __destruct
 	 *
 	 * @access public
@@ -546,6 +555,18 @@ class Request
 	}
 
 	/**
+	 * Method __toString
+	 *
+	 * @access public
+	 *
+	 * @return string
+	 */
+	public function __toString():string
+	{
+		return $this->raw;
+	}
+
+	/**
 	 * Method writeLine
 	 *
 	 * @access private
@@ -570,6 +591,8 @@ class Request
 	 */
 	private function write( string$content )
 	{
+		$this->raw.= $content;
+
 		fwrite( $this->handle, $content );
 	}
 

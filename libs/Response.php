@@ -74,6 +74,15 @@ class Response
 	protected $body= '';
 
 	/**
+	 * Var raw
+	 *
+	 * @access private
+	 *
+	 * @var    string
+	 */
+	private $raw;
+
+	/**
 	 * Method __construct
 	 *
 	 * @access public
@@ -86,9 +95,9 @@ class Response
 		$this->request= $request;
 		$this->handle= $handle;
 
-		$this->parsMessageLine(trim(fgets($this->handle)));
+		$this->parsMessageLine($this->getLine());
 
-		while( $headerLine= trim(fgets($this->handle)) ){
+		while( $headerLine= $this->getLine() ){
 			$this->parseHeader($headerLine);
 		}
 
@@ -201,6 +210,34 @@ class Response
 		{
 			return null;
 		}
+	}
+
+	/**
+	 * Method __toString
+	 *
+	 * @access public
+	 *
+	 * @return string
+	 */
+	public function __toString():string
+	{
+		return $this->raw;
+	}
+
+	/**
+	 * Method getLine
+	 *
+	 * @access private
+	 *
+	 * @return string
+	 */
+	private function getLine():string
+	{
+		$line= fgets( $this->handle );
+
+		$this->raw.= $line;
+
+		return trim( $line );
 	}
 
 	/**
